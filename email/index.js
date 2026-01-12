@@ -6,6 +6,8 @@ const handleSearchEmails = require('./search');
 const handleReadEmail = require('./read');
 const handleSendEmail = require('./send');
 const handleMarkAsRead = require('./mark-as-read');
+const handleCreateDraft = require('./create-draft');
+const handleReplyEmail = require('./reply');
 
 // Email tool definitions
 const emailTools = [
@@ -127,6 +129,46 @@ const emailTools = [
     handler: handleSendEmail
   },
   {
+    name: "create-draft",
+    description: "Creates a new draft email",
+    inputSchema: {
+      type: "object",
+      properties: {
+        to: {
+          type: "string",
+          description: "Comma-separated list of recipient email addresses"
+        },
+        cc: {
+          type: "string",
+          description: "Comma-separated list of CC recipient email addresses"
+        },
+        bcc: {
+          type: "string",
+          description: "Comma-separated list of BCC recipient email addresses"
+        },
+        subject: {
+          type: "string",
+          description: "Email subject"
+        },
+        body: {
+          type: "string",
+          description: "Email body content (can be plain text or HTML)"
+        },
+        importance: {
+          type: "string",
+          description: "Email importance (normal, high, low)",
+          enum: ["normal", "high", "low"]
+        },
+        folderName: {
+          type: "string",
+          description: "Folder to create the draft in (default: 'AI-drafts' if it exists, otherwise 'Drafts')"
+        }
+      },
+      required: []
+    },
+    handler: handleCreateDraft
+  },
+  {
     name: "mark-as-read",
     description: "Marks an email as read or unread",
     inputSchema: {
@@ -144,6 +186,33 @@ const emailTools = [
       required: ["id"]
     },
     handler: handleMarkAsRead
+  },
+  {
+    name: "reply-to-email",
+    description: "Replies to an email (either as a draft or sent immediately)",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+          description: "ID of the email to reply to"
+        },
+        body: {
+          type: "string",
+          description: "The content of your reply"
+        },
+        draft: {
+          type: "boolean",
+          description: "Whether to create a draft reply (true) or send immediately (false). Default: true"
+        },
+        folderName: {
+          type: "string",
+          description: "Folder to store the draft reply in (default: 'AI-drafts' if it exists, otherwise 'Drafts')"
+        }
+      },
+      required: ["id", "body"]
+    },
+    handler: handleReplyEmail
   }
 ];
 
@@ -153,5 +222,7 @@ module.exports = {
   handleSearchEmails,
   handleReadEmail,
   handleSendEmail,
-  handleMarkAsRead
+  handleCreateDraft,
+  handleMarkAsRead,
+  handleReplyEmail
 };
