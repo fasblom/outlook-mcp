@@ -44,4 +44,7 @@ module.exports = {
 
   // Timezone
   DEFAULT_TIMEZONE: "Central European Standard Time",
+
+  // Drafts
+  DEFAULT_DRAFT_FOLDER: "AI-drafts",
 };
