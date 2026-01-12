@@ -39,7 +39,7 @@ Certified by MCPHub https://mcphub.com/mcp-servers/ryaker/outlook-mcp
 ## Features
 
 - **Authentication**: OAuth 2.0 authentication with Microsoft Graph API
-- **Email Management**: List, search, read, and send emails
+- **Email Management**: List, search, read, send, reply, and draft emails
 - **Calendar Management**: List, create, accept, decline, and delete calendar events
 - **Modular Structure**: Clean separation of concerns for better maintainability
 - **OData Filter Handling**: Proper escaping and formatting of OData queries
@@ -102,6 +102,7 @@ To use this MCP server you need to first register and configure an app in Azure 
     - Calendars.Read
     - Calendars.ReadWrite
     - Contacts.Read
+    - Mail.ReadWrite (Required for creating drafts)
 6. Click on "Add permissions"
 
 ### Client Secret
@@ -169,6 +170,7 @@ To configure server behavior, you can edit `config.js` to change:
 - Authentication parameters
 - Email field selections
 - API endpoints
+- **DEFAULT_DRAFT_FOLDER**: The folder where AI drafts and replies are saved (default: "AI-drafts")
 
 ## Usage with Claude Desktop
 
